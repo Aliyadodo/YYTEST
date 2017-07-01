@@ -19,8 +19,8 @@ public:
 
 GDAL_EX_EXPORT GDALImageRect GetImageRect(GDALDataset* poDS);
 
-GDAL_EX_EXPORT bool WriteData(float* pData, string strImage, string strFormat, int nBlockSize = 2048, GDALProgressFunc pfnProgress = NULL);
-GDAL_EX_EXPORT bool WriteDataset(GDALDataset* poDS, string strImage, string strFormat, int nBlockSize = 2048, GDALProgressFunc pfnProgress = NULL);
+GDAL_EX_EXPORT bool WriteData(float* pData, const char* pszImagePath, const char* pszDriverName, int nBlockSize = 2048, GDALProgressFunc pfnProgress = NULL);
+GDAL_EX_EXPORT bool WriteDataset(GDALDataset* poDS, const char* pszImagePath, const char* pszDriverName, int nBlockSize = 2048, GDALProgressFunc pfnProgress = NULL);
 
 GDAL_EX_EXPORT unsigned char* GetTile(GDALDataset* poDS, int nXOff, int nYOff, int nXSize, int nYSize, int band, int level = 0);
 

@@ -44,19 +44,23 @@ GDALImageRect GetImageRect( GDALDataset* poDS )
 	return rect;
 }
 
-GDAL_EX_EXPORT bool WriteData(float* pData, string strImage, string strFormat, int nBlockSize /*= 2048*/, GDALProgressFunc pfnProgress /*= NULL*/)
+GDAL_EX_EXPORT bool WriteData(float* pData, const char* pszImagePath, const char* pszDriverName, int nBlockSize /*= 2048*/, GDALProgressFunc pfnProgress /*= NULL*/)
 {
+	if (pData == NULL)
+	{
+		return false;
+	}
 	return true;
 }
 
-bool WriteDataset( GDALDataset* poDS, string strImage, string strFormat, int nBlockSize /*= 2048*/, GDALProgressFunc pfnProgress /*= NULL*/ )
+bool WriteDataset(GDALDataset* poDS, const char* pszImagePath, const char* pszDriverName, int nBlockSize /*= 2048*/, GDALProgressFunc pfnProgress /*= NULL*/)
 {
-	if (poDS == NULL || strImage.empty())
+	if (poDS == NULL)
 	{
 		return false;
 	}
 
-	GDALDriver* poDriver = (GDALDriver*)GDALGetDriverByName(strFormat.c_str());
+	GDALDriver* poDriver = (GDALDriver*)GDALGetDriverByName(pszDriverName);
 	if (poDriver == NULL)
 	{
 		return false;
@@ -76,7 +80,7 @@ bool WriteDataset( GDALDataset* poDS, string strImage, string strFormat, int nBl
 	}
 	GDALDataType eType = poBand->GetRasterDataType();
 
-	GDALDataset* poDstDS = poDriver->Create(strImage.c_str(), nWidth, nHeight, nBand, eType, NULL);
+	GDALDataset* poDstDS = poDriver->Create(pszImagePath, nWidth, nHeight, nBand, eType, NULL);
 	if (poDstDS == NULL)
 	{
 		return false;
